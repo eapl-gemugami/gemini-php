@@ -49,12 +49,6 @@ class Gemini {
 		return $dirs;
 	}
 
-	function get_host_url($host) {
-		if(empty($host))
-			return 'default';
-		
-	}
-
 	function get_status_code($filepath) {
 		if(is_file($filepath) and file_exists($filepath))
 			return "20";
