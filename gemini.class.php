@@ -29,7 +29,7 @@ class Gemini {
 			$this->default_host_dir .= "/";
 		if($this->logging) {
 			if(!file_exists($this->log_file)) {
-				$this->log_to_file("New log file created");
+				$this->log_to_file("Log created", null, null, null, null);
 			}
 			if(!is_writable($this->log_file)) {
 				die("{$this->log_file} is not writable.");
