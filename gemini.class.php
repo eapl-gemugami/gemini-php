@@ -35,6 +35,8 @@ class Gemini {
 				die("{$this->log_file} is not writable.");
 			}
 		}
+		if(!is_readable($this->certificate_file))
+			die("Certificate file {$this->certificate_file} not readable.");
 	}
 
 	function parse_request($request) {
