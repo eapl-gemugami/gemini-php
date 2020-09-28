@@ -11,3 +11,5 @@ Let's take 'gemini.com' as an example.
 * Generate a certificate and place it in the 'certs' directory named gemini.com.pem
 * Create a directory to server files from in the 'hosts' directory named gemini.com (e.g. mkdir hosts/gemini.com)
 * A file called index.gemini will be served if you haven't specified a path (this file is located at hosts/default/index.gemini)
+
+=> natalie.jpg
