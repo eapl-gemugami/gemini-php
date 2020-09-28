@@ -7,7 +7,7 @@ class Gemini {
 
 	function __construct($config) {
 		if(empty($config['certificate_file']))
-			die("Missing certificate file.  Edit config.php");
+			die("Missing certificate file.  Edit config.php\n");
 		$this->ip = "0";
 		$this->port = "1965";
 		$this->data_dir = "hosts/";
@@ -32,11 +32,11 @@ class Gemini {
 				$this->log_to_file("Log created", null, null, null, null);
 			}
 			if(!is_writable($this->log_file)) {
-				die("{$this->log_file} is not writable.");
+				die("{$this->log_file} is not writable.\n");
 			}
 		}
 		if(!is_readable($this->certificate_file))
-			die("Certificate file {$this->certificate_file} not readable.");
+			die("Certificate file {$this->certificate_file} not readable.\n");
 	}
 
 	function parse_request($request) {
@@ -88,8 +88,8 @@ class Gemini {
 		$hostname = "";
 		if(!is_array($url))
 			return false;
-		if(!empty($parsed_url['host']))
-			$hostname = $parsed_url['host'];
+		if(!empty($url['host']))
+			$hostname = $url['host'];
 
 		$valid_hosts = $this->get_valid_hosts();
 		if(!in_array($hostname, $valid_hosts))
