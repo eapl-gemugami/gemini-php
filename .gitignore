@@ -1,2 +1,4 @@
 hosts/
 certs/
+logs/
+config.php
