@@ -98,8 +98,12 @@ class Gemini {
 		// Kristall Browser is adding "__" to the end of the filenames
 		// wtf am I missing?
 		$url['path'] = str_replace("__", "", $url['path']);
-		if(substr($url['path'], -1) == "/" or $url['path'] == "/" or $url['path'] == "")
+		// force an index file to be appended if a filename is missing
+		if(substr($url['path'], -1) == "/") {
+			$url['path'] .= $this->default_index_file;
+		} elseif($url['path'] == "/" or $url['path'] == "") {
 			$url['path'] = "/".$this->default_index_file;
+		}
 
 		return $this->data_dir.$hostname.$url['path'];
 	}
