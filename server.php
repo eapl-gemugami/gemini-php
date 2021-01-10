@@ -20,11 +20,16 @@ $socket = stream_socket_server("tcp://{$g->ip}:{$g->port}", $errno, $errstr, STR
 
 stream_socket_enable_crypto($socket, false);
 
+// apply patch from @nervuri:matrix.org to stop supporting out of spec versions of TLS
+$cryptoMethod = STREAM_CRYPTO_METHOD_TLS_SERVER
+	& ~ STREAM_CRYPTO_METHOD_TLSv1_0_SERVER
+	& ~ STREAM_CRYPTO_METHOD_TLSv1_1_SERVER;
+
 while(true) {
 	$forkedSocket = stream_socket_accept($socket, "-1", $remoteIP);
 
 	stream_set_blocking($forkedSocket, true);
-	stream_socket_enable_crypto($forkedSocket, true, STREAM_CRYPTO_METHOD_TLS_SERVER);
+	stream_socket_enable_crypto($forkedSocket, true, $cryptoMethod);
 	$line = fread($forkedSocket, 1024);
 	stream_set_blocking($forkedSocket, false);
 
