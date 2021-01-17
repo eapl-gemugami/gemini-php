@@ -40,8 +40,8 @@ class Gemini {
 	}
 
 	function parse_request($request) {
-		$data = parse_url($request);
-		return $data;
+		$url = trim($request); // strip <CR><LF> from the end
+		return parse_url($url);
 	}
 
 	function get_valid_hosts() {
@@ -93,10 +93,10 @@ class Gemini {
 		// wtf am I missing?
 		$url['path'] = str_replace("__", "", $url['path']);
 		// force an index file to be appended if a filename is missing
-		if(substr($url['path'], -1) == "/") {
-			$url['path'] .= $this->default_index_file;
-		} elseif($url['path'] == "/" or $url['path'] == "") {
+		if(empty($url['path'])) {
 			$url['path'] = "/".$this->default_index_file;
+		} elseif(substr($url['path'], -1) == "/") {
+			$url['path'] .= $this->default_index_file;
 		}
 
 		return $this->data_dir.$hostname.$url['path'];
