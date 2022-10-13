@@ -5,7 +5,7 @@
  *
  * This is your certificate file.  A self-signed certificate is acceptable here.
  * You can generate one using:
- *   
+ *
  *   openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
  *
  * Then combine the key and certificate and copy them to the certs directory:
@@ -34,10 +34,8 @@ $config['certificate_passphrase'] = '';
 
 // Default index file.  If a path isn't specified then the server will
 // default to an index file (like index.html on a web server).
-//$config['default_index_file'] = "index.gemini";
+//$config['default_index_file'] = "index.gmi";
 
 // Logging, setting this to false will disable logging (default is on/true);
 //$config['logging'] = true;
 //$config['log_file'] = "logs/gemini-php.log";
-
-?>

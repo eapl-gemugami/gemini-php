@@ -4,8 +4,9 @@
  * Version 0.1, Oct 2020
 */
 
-if(!require("config.php"))
+if(!require("config.php")) {
 	die("config.php is missing.  Copy config.php.sample to config.php and customise your settings");
+}
 require("gemini.class.php");
 $g = new Gemini($config);
 
@@ -25,6 +26,10 @@ $cryptoMethod = STREAM_CRYPTO_METHOD_TLS_SERVER
 	& ~ STREAM_CRYPTO_METHOD_TLSv1_0_SERVER
 	& ~ STREAM_CRYPTO_METHOD_TLSv1_1_SERVER;
 
+$cryptoMethod = STREAM_CRYPTO_METHOD_TLSv1_3_SERVER;
+
+print("Running server on port $g->port\n");
+
 while(true) {
 	$forkedSocket = stream_socket_accept($socket, "-1", $remoteIP);
 
@@ -42,17 +47,18 @@ while(true) {
 	$meta = "";
 	$filesize = 0;
 
-	if($status_code == "20") {
+	if ($status_code == "20") {
 		$meta = $g->get_mime_type($filepath);
-		$content = file_get_contents($filepath);	
+		$content = file_get_contents($filepath);
 		$filesize = filesize($filepath);
 	} else {
 		$meta = "Not found";
 	}
 
-	$status_line = $status_code." ".$meta;
-	if($g->logging)
-		$g->log_to_file($remoteIP,$status_code, $meta, $filepath, $filesize);
+	$status_line = $status_code . " " . $meta;
+	if ($g->logging) {
+		$g->log_to_file($remoteIP, $status_code, $meta, $filepath, $filesize);
+	}
 	$status_line .= "\r\n";
 	fwrite($forkedSocket, $status_line);
 
@@ -62,5 +68,3 @@ while(true) {
 
 	fclose($forkedSocket);
 }
-
-?>
